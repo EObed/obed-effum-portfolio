@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { Download } from "lucide-react"
 import {FaCode} from "react-icons/fa6";
 
@@ -10,8 +10,61 @@ const About = () => {
     const rightRef = useRef<HTMLDivElement>(null)
     const titleRef = useRef<HTMLHeadingElement>(null)
 
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("in-view")
+                    }
+                })
+            },
+            { threshold: 0.15 }
+        )
+
+        const elements = [titleRef.current, leftRef.current, rightRef.current]
+        elements.forEach((el) => el && observer.observe(el))
+
+        return () => observer.disconnect()
+    }, [])
+
     return (
         <>
+            <style>{`
+                .reveal {
+                    opacity: 0;
+                    transform: scale(0.92) translateY(40px);
+                    filter: blur(6px);
+                    transition: opacity 0.7s ease, transform 0.7s ease, filter 0.7s ease;
+                }
+                .reveal.in-view {
+                    opacity: 1;
+                    transform: scale(1) translateY(0);
+                    filter: blur(0px);
+                }
+                .reveal-left {
+                    opacity: 0;
+                    transform: scale(0.94) translateX(-40px);
+                    filter: blur(4px);
+                    transition: opacity 0.75s ease 0.15s, transform 0.75s ease 0.15s, filter 0.75s ease 0.15s;
+                }
+                .reveal-left.in-view {
+                    opacity: 1;
+                    transform: scale(1) translateX(0);
+                    filter: blur(0px);
+                }
+                .reveal-right {
+                    opacity: 0;
+                    transform: scale(0.94) translateX(40px);
+                    filter: blur(4px);
+                    transition: opacity 0.75s ease 0.3s, transform 0.75s ease 0.3s, filter 0.75s ease 0.3s;
+                }
+                .reveal-right.in-view {
+                    opacity: 1;
+                    transform: scale(1) translateX(0);
+                    filter: blur(0px);
+                }
+            `}</style>
             <section
                 ref={sectionRef}
                 id="about"
@@ -29,15 +82,12 @@ const About = () => {
 
                         <div ref={leftRef} className="reveal-left flex flex-col gap-5 md:w-1/2">
                             <p className="text-gray-600 text-base md:text-lg leading-relaxed">
-                                I&apos;m a passionate full-stack developer with over 3 years of experience
-                                building web applications. I specialize in React, TypeScript, and Node.js,
-                                and I love creating intuitive user interfaces and scalable backend systems.
+                                I’m a full-stack developer who enjoys turning complex ideas into fast, reliable, and intuitive digital products.
+                                My work spans both frontend and backend development, allowing me to build complete, end-to-end solutions that don’t just look good but also perform efficiently under the hood.
+                                I build scalable, end-to-end web applications using modern frontend technologies like Next.js, React, TypeScript, and Tailwind CSS, alongside backend tools such as PHP and Laravel.
+                                I focus on creating responsive, accessible interfaces and well-structured APIs, with an emphasis on clean, maintainable code, efficient data handling, and systems that are easy to scale and extend.
                             </p>
-                            <p className="text-gray-600 text-base md:text-lg leading-relaxed">
-                                When I&apos;m not coding, you&apos;ll find me contributing to open-source projects,
-                                writing technical blog posts, or exploring new technologies. I believe in
-                                continuous learning and staying up-to-date with the latest industry trends.
-                            </p>
+
                             <button className="self-start flex items-center gap-2 px-5 py-3 border border-gray-300 rounded-xl text-gray-800 font-medium text-sm hover:bg-gray-50 transition-colors mt-2">
                                 <Download size={16} strokeWidth={1.8} />
                                 Download Resume
@@ -58,7 +108,6 @@ const About = () => {
                                 <FaCode />
                             </span>
                         </div>
-
                     </div>
                 </div>
             </section>
