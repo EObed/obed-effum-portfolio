@@ -25,8 +25,8 @@ const Hero = () => {
 
 
                 <p className="text-lg md:text-xl text-gray-500 max-w-xl leading-relaxed">
-                    Crafting beautiful, performant web experiences with modern technologies.
-                    Passionate about clean code and elegant solutions.
+                    Building scalable, high-performance web applications with modern frontend and backend technologies.
+                    Focused on clean architecture, maintainable code, and seamless user experiences from interface to API.
                 </p>
 
                 <div className="flex gap-4 mt-2">
