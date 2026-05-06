@@ -1,7 +1,6 @@
 import logo from "@/public/images/logo.png";
 import Image from "next/image";
 import {FaGithub, FaLinkedin} from "react-icons/fa";
-import {FiMail} from "react-icons/fi";
 import AnimatedHeader from "@/components/AnimatedHeader";
 
 const Hero = () => {
@@ -30,23 +29,20 @@ const Hero = () => {
                 </p>
 
                 <div className="flex gap-4 mt-2">
-                    <button className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors">
+                    <a href={"#projects"} className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors">
                         View My Work
-                    </button>
-                    <button className="px-6 py-3 bg-white hover:bg-gray-50 text-gray-900 font-semibold rounded-xl border border-gray-200 transition-colors">
+                    </a>
+                    <a href={"#contact"} className="px-6 py-3 bg-white hover:bg-gray-50 text-gray-900 font-semibold rounded-xl border border-gray-200 transition-colors">
                         Get In Touch
-                    </button>
+                    </a>
                 </div>
 
                 <div className="flex gap-6 mt-2 text-gray-500">
-                    <a href="#" className="hover:text-gray-900 transition-colors">
+                    <a href="https://github.com/EObed" target="_blank" rel="noopener noreferrer" className="hover:text-gray-900 transition-colors">
                         <FaGithub size={26} strokeWidth={1.5} />
                     </a>
-                    <a href="#" className="hover:text-gray-900 transition-colors">
+                    <a href="https://www.linkedin.com/in/obed-effum-b74244194" target="_blank" rel="noopener noreferrer" className="hover:text-gray-900 transition-colors">
                         <FaLinkedin size={26} strokeWidth={1.5} />
-                    </a>
-                    <a href="#" className="hover:text-gray-900 transition-colors">
-                        <FiMail size={26} strokeWidth={1.5} />
                     </a>
                 </div>
 

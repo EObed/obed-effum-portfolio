@@ -17,11 +17,10 @@ const navLinks = [
 
 const NavBar = () => {
     return (
-        <nav className="w-full px-6 md:px-8 py-4 bg-white border-b border-gray-100 flex justify-between items-center">
+        <nav className="sticky top-0 z-50 w-full px-6 md:px-8 py-4 bg-white border-b border-gray-100 flex justify-between items-center">
             <span className="text-xl font-bold bg-gradient-to-r from-indigo-500 to-violet-400 bg-clip-text text-transparent">
-        Obed Effum
-      </span>
-
+                Obed Effum
+            </span>
             <ul className="hidden md:flex gap-8 list-none">
                 {navLinks.map((link, index) => (
                     <li key={index}>
@@ -34,7 +33,6 @@ const NavBar = () => {
                     </li>
                     ))}
             </ul>
-
             <div className="md:hidden">
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
