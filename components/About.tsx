@@ -88,10 +88,12 @@ const About = () => {
                                 I focus on creating responsive, accessible interfaces and well-structured APIs, with an emphasis on clean, maintainable code, efficient data handling, and systems that are easy to scale and extend.
                             </p>
 
-                            <button className="self-start flex items-center gap-2 px-5 py-3 border border-gray-300 rounded-xl text-gray-800 font-medium text-sm hover:bg-gray-50 transition-colors mt-2">
+                            <a href="/resume.pdf"
+                               download="Obed_Effum_Resume.pdf"
+                                className="self-start flex items-center gap-2 px-5 py-3 border border-gray-300 rounded-xl text-gray-800 font-medium text-sm hover:bg-gray-50 transition-colors mt-2">
                                 <Download size={16} strokeWidth={1.8} />
                                 Download Resume
-                            </button>
+                            </a>
                         </div>
 
                         <div
