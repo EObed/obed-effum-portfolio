@@ -105,14 +105,18 @@ const Projects = () => {
                 }
             `}</style>
 
-            <section id="projects" className="w-full bg-gray-50 px-6 py-20 md:py-28">
+            <section
+                id="projects"
+                className="w-full bg-gray-50 dark:bg-slate-950 px-6 py-20 md:py-28 transition-colors"
+            >
                 <div className="max-w-6xl mx-auto flex flex-col gap-12">
 
                     <div ref={titleRef} className="reveal-title text-center flex flex-col gap-3">
-                        <h2 className="text-4xl md:text-5xl font-black text-gray-900">
+                        <h2 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-slate-100 transition-colors">
                             Featured Projects
                         </h2>
-                        <p className="text-gray-500 text-base md:text-lg">
+
+                        <p className="text-gray-500 dark:text-slate-400 text-base md:text-lg transition-colors">
                             Here are some of my recent works that showcase my skills and expertise
                         </p>
                     </div>

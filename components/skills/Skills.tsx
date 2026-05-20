@@ -67,13 +67,17 @@ const Skills = () => {
                 }
             `}</style>
 
-            <section id="skills" className="w-full bg-gray-50 px-6 py-20 md:py-28">
+            <section
+                id="skills"
+                className="w-full bg-gray-50 dark:bg-slate-950 px-6 py-20 md:py-28 transition-colors dark:border-y"
+            >
                 <div className="max-w-6xl mx-auto flex flex-col gap-12">
                     <div ref={titleRef} className="reveal-title text-center flex flex-col gap-3">
-                        <h2 className="text-4xl md:text-5xl font-black text-gray-900">
-                            Skills &amp; Expertise
+                        <h2 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-slate-100 transition-colors">
+                            Skills & Expertise
                         </h2>
-                        <p className="text-gray-500 text-base md:text-lg">
+
+                        <p className="text-gray-500 dark:text-slate-400 text-base md:text-lg transition-colors">
                             Technologies and tools I utilize
                         </p>
                     </div>
