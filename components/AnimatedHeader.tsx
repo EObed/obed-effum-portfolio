@@ -29,7 +29,7 @@ export default function AnimatedHeader() {
     return (
         <h1
             ref={headerRef}
-            className="animated-text text-4xl md:text-7xl font-black text-gray-900 leading-tight tracking-tight"
+            className="animated-text text-4xl md:text-7xl font-black text-gray-900 dark:text-white leading-tight tracking-tight"
         >
             Obed Effum
         </h1>

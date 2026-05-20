@@ -20,8 +20,7 @@ export const ProjectCard = ({ project, delay = 0 }: ProjectCardProps) => {
     return (
         <>
             <div
-                className="reveal-card group flex flex-col bg-white rounded-2xl overflow-hidden border border-gray-200 transition-shadow duration-300 hover:shadow-xl cursor-pointer"
-                style={{ transitionDelay: `${delay}ms` }}
+                className="reveal-card group flex flex-col bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-gray-200 dark:border-slate-800 transition-shadow duration-300 hover:shadow-xl cursor-pointer"                style={{ transitionDelay: `${delay}ms` }}
                 onClick={() => setModalOpen(true)}
             >
                 <div className="relative w-full h-52 overflow-hidden">
@@ -36,18 +35,19 @@ export const ProjectCard = ({ project, delay = 0 }: ProjectCardProps) => {
 
                 <div className="flex flex-col gap-4 p-5">
                     <div>
-                        <h3 className="font-bold text-gray-900 text-lg">{project.title}</h3>
-                        <p className="text-gray-500 text-sm mt-1 leading-relaxed line-clamp-3">
+                        <h3 className="font-bold text-gray-900 dark:text-slate-100 text-lg">
+                            {project.title}
+                        </h3>
+
+                        <p className="text-gray-500 dark:text-slate-400 text-sm mt-1 leading-relaxed line-clamp-3">
                             {project.description}
                         </p>
                     </div>
 
                     <div className="flex flex-wrap gap-2">
-                        {project.techStack.map((tech) => (
-                            <span
-                                key={tech}
-                                className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full"
-                            >
+                        {project.techStack.map((tech, index) => (
+                            <span key={index}
+                                  className=" px-3 py-1 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-200 text-sm font-medium rounded-full">
                                 {tech}
                             </span>
                         ))}
@@ -55,8 +55,7 @@ export const ProjectCard = ({ project, delay = 0 }: ProjectCardProps) => {
 
                     <button
                         onClick={(e) => { e.stopPropagation(); setModalOpen(true) }}
-                        className="mt-auto flex items-center justify-center gap-2 w-full py-3 border border-gray-200 rounded-xl text-gray-800 text-sm font-medium hover:bg-gray-50 transition-colors"
-                    >
+                        className="mt-auto flex items-center justify-center gap-2 w-full py-3 border border-gray-200 dark:border-slate-700 rounded-xl text-gray-800 dark:text-slate-200 text-sm font-medium hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors"                    >
                         View Project <ExternalLink size={14} strokeWidth={1.8} />
                     </button>
                 </div>
@@ -64,16 +63,16 @@ export const ProjectCard = ({ project, delay = 0 }: ProjectCardProps) => {
 
             {modalOpen && (
                 <div
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 dark:bg-black/70 backdrop-blur-sm p-4"
                     onClick={() => setModalOpen(false)}
                 >
                     <div
-                        className="relative bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl"
+                        className="relative bg-white dark:bg-slate-900 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl"
                         onClick={(e) => e.stopPropagation()}
                     >
                         <button
                             onClick={() => setModalOpen(false)}
-                            className="absolute top-4 right-4 z-10 p-1.5 bg-white rounded-full shadow hover:bg-gray-100 transition-colors"
+                            className="absolute top-4 right-4 z-10 p-1.5 bg-white dark:bg-slate-800 rounded-full shadow hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
                         >
                             <X size={18} />
                         </button>
@@ -114,16 +113,23 @@ export const ProjectCard = ({ project, delay = 0 }: ProjectCardProps) => {
                         </div>
 
                         <div className="flex flex-col gap-5 p-6">
-                            <h2 className="text-2xl font-black text-gray-900">{project.title}</h2>
-                            <p className="text-gray-600 leading-relaxed">{project.description}</p>
+                            <h2 className="text-2xl font-black text-gray-900 dark:text-slate-100">
+                                {project.title}
+                            </h2>
+
+                            <p className="text-gray-600 dark:text-slate-400 leading-relaxed">
+                                {project.description}
+                            </p>
 
                             <div>
-                                <h4 className="text-sm font-semibold text-gray-700 mb-2">Tech Stack</h4>
+                                <h4 className="text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">
+                                    Tech Stack
+                                </h4>
                                 <div className="flex flex-wrap gap-2">
                                     {project.techStack.map((tech, index) => (
                                         <span
                                             key={index}
-                                            className="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full"
+                                            className=" px-3 py-1 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-200 text-sm font-medium rounded-full"
                                         >
                                             {tech}
                                         </span>
@@ -136,8 +142,7 @@ export const ProjectCard = ({ project, delay = 0 }: ProjectCardProps) => {
                                 href={project.link}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center justify-center gap-2 w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors"
-                                >
+                                className="flex items-center justify-center gap-2 w-full py-3 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-semibold rounded-xl transition-colors"                                >
                                 View Live Project <ExternalLink size={15} strokeWidth={1.8} />
                                 </a>
                                 )}
