@@ -8,7 +8,7 @@ import Projects from "@/components/projects/Projects";
 
 export default function Home() {
   return (
-    <div className="">
+    <div>
       <NavBar />
       <Hero />
       <About />
