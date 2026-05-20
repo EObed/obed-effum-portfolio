@@ -26,7 +26,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <ThemeProvider>
           {children}
-          <Toaster position="top-center" duration={5000} />
+          <Toaster position="top-center" duration={5000} richColors theme="system" />
         </ThemeProvider>
       </body>
       </html>

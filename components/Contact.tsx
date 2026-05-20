@@ -91,62 +91,76 @@ export default function Contact() {
     };
 
     return (
-        <section id="contact" className="py-16 px-4 bg-[#f5f7fb]">
+        <section
+            id="contact"
+            className="py-16 px-4 bg-[#f5f7fb] dark:bg-slate-950 transition-colors"
+        >
             <div className="max-w-3xl mx-auto text-center mb-10">
-                <h2 className="text-4xl font-bold mb-4">Get In Touch</h2>
-                <p className="text-gray-600 text-lg">
+                <h2 className="text-4xl font-bold mb-4 text-gray-900 dark:text-slate-100 transition-colors">
+                    Get In Touch
+                </h2>
+
+                <p className="text-gray-600 dark:text-slate-400 text-lg transition-colors">
                     Have a project in mind? Let&apos;s work together to bring your ideas to life
                 </p>
             </div>
 
-            <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm p-6 sm:p-8 border">
-                <h3 className="text-xl font-semibold mb-2">Send Me a Message</h3>
-                <p className="text-gray-500 mb-6">
+            <div
+                className="max-w-3xl mx-auto bg-white dark:bg-slate-900 rounded-2xl shadow-sm p-6 sm:p-8 border border-gray-200 dark:border-slate-800 transition-colors"
+            >
+                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-slate-100 transition-colors">
+                    Send Me a Message
+                </h3>
+
+                <p className="text-gray-500 dark:text-slate-400 mb-6 transition-colors">
                     Fill out the form below and I&apos;ll get back to you as soon as possible
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
                     <div>
-                        <label className="block mb-2 font-medium">Name</label>
+                        <label className="block mb-2 font-medium text-gray-800 dark:text-slate-200 transition-colors">Name</label>
                         <input
                             type="text"
                             name="name"
                             placeholder="Your name"
                             value={form.name}
                             onChange={handleChange}
-                            className="w-full rounded-lg bg-gray-100 px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full rounded-lg bg-gray-100 dark:bg-slate-800 text-gray-900 dark:text-slate-100 placeholder:text-gray-400 dark:placeholder:text-slate-500 border border-transparent dark:border-slate-700 px-4 py-3
+                                        outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
                             required
                         />
                     </div>
 
                     <div>
-                        <label className="block mb-2 font-medium">Email</label>
+                        <label className="block mb-2 font-medium text-gray-800 dark:text-slate-200 transition-colors">Email</label>
                         <input
                             type="email"
                             name="email"
                             placeholder="your.email@example.com"
                             value={form.email}
                             onChange={handleChange}
-                            className="w-full rounded-lg bg-gray-100 px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full rounded-lg bg-gray-100 dark:bg-slate-800 text-gray-900 dark:text-slate-100 placeholder:text-gray-400 dark:placeholder:text-slate-500 border border-transparent dark:border-slate-700 px-4 py-3
+                                        outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
                             required
                         />
 
                         {form.email.length >= 2 && !isValidEmail(form.email) && (
-                            <p className="text-sm text-red-500 mt-1">
+                            <p className="text-sm text-red-500 dark:text-red-400 mt-1 transition-colors">
                                 Please enter a valid email — I’ll contact you via this email
                             </p>
                         )}
                     </div>
 
                     <div>
-                        <label className="block mb-2 font-medium">Message</label>
+                        <label className="block mb-2 font-medium text-gray-800 dark:text-slate-200 transition-colors">Message</label>
                         <textarea
                             name="message"
                             placeholder="Tell me about your project..."
                             value={form.message}
                             onChange={handleChange}
                             rows={4}
-                            className="w-full rounded-lg bg-gray-100 px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full rounded-lg bg-gray-100 dark:bg-slate-800 text-gray-900 dark:text-slate-100 placeholder:text-gray-400 dark:placeholder:text-slate-500 border border-transparent dark:border-slate-700 px-4 py-3
+                                        outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
                             required
                         />
                     </div>
@@ -154,7 +168,7 @@ export default function Contact() {
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className={`w-full bg-blue-600 text-white py-3 rounded-lg font-medium transition ${
+                        className={`w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white py-3 rounded-lg font-medium transition-colors ${
                             isSubmitting
                                 ? "opacity-70 cursor-not-allowed"
                                 : "hover:bg-blue-700"
