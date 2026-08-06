@@ -93,54 +93,54 @@ export default function Contact() {
     return (
         <section
             id="contact"
-            className="py-16 px-4 bg-[#f5f7fb] dark:bg-slate-950 transition-colors"
+            className="py-20 md:py-28 px-6 bg-slate-50 dark:bg-slate-950 transition-colors"
         >
             <div className="max-w-3xl mx-auto text-center mb-10">
-                <h2 className="text-4xl font-bold mb-4 text-gray-900 dark:text-slate-100 transition-colors">
+                <h2 className="text-4xl md:text-5xl font-black mb-4 text-slate-900 dark:text-slate-100 transition-colors">
                     Get In Touch
                 </h2>
 
-                <p className="text-gray-600 dark:text-slate-400 text-lg transition-colors">
+                <p className="text-slate-500 dark:text-slate-400 text-lg transition-colors">
                     Have a project in mind? Let&apos;s work together to bring your ideas to life
                 </p>
             </div>
 
             <div
-                className="max-w-3xl mx-auto bg-white dark:bg-slate-900 rounded-2xl shadow-sm p-6 sm:p-8 border border-gray-200 dark:border-slate-800 transition-colors"
+                className="max-w-3xl mx-auto bg-white dark:bg-slate-900 rounded-2xl shadow-sm p-6 sm:p-8 border border-slate-200 dark:border-slate-800 transition-colors"
             >
-                <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-slate-100 transition-colors">
+                <h3 className="text-xl font-semibold mb-2 text-slate-900 dark:text-slate-100 transition-colors">
                     Send Me a Message
                 </h3>
 
-                <p className="text-gray-500 dark:text-slate-400 mb-6 transition-colors">
+                <p className="text-slate-500 dark:text-slate-400 mb-6 transition-colors">
                     Fill out the form below and I&apos;ll get back to you as soon as possible
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
                     <div>
-                        <label className="block mb-2 font-medium text-gray-800 dark:text-slate-200 transition-colors">Name</label>
+                        <label className="block mb-2 font-medium text-slate-800 dark:text-slate-200 transition-colors">Name</label>
                         <input
                             type="text"
                             name="name"
                             placeholder="Your name"
                             value={form.name}
                             onChange={handleChange}
-                            className="w-full rounded-lg bg-gray-100 dark:bg-slate-800 text-gray-900 dark:text-slate-100 placeholder:text-gray-400 dark:placeholder:text-slate-500 border border-transparent dark:border-slate-700 px-4 py-3
-                                        outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+                            className="w-full rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 border border-transparent dark:border-slate-700 px-4 py-3
+                                        outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
                             required
                         />
                     </div>
 
                     <div>
-                        <label className="block mb-2 font-medium text-gray-800 dark:text-slate-200 transition-colors">Email</label>
+                        <label className="block mb-2 font-medium text-slate-800 dark:text-slate-200 transition-colors">Email</label>
                         <input
                             type="email"
                             name="email"
                             placeholder="your.email@example.com"
                             value={form.email}
                             onChange={handleChange}
-                            className="w-full rounded-lg bg-gray-100 dark:bg-slate-800 text-gray-900 dark:text-slate-100 placeholder:text-gray-400 dark:placeholder:text-slate-500 border border-transparent dark:border-slate-700 px-4 py-3
-                                        outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+                            className="w-full rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 border border-transparent dark:border-slate-700 px-4 py-3
+                                        outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
                             required
                         />
 
@@ -152,15 +152,15 @@ export default function Contact() {
                     </div>
 
                     <div>
-                        <label className="block mb-2 font-medium text-gray-800 dark:text-slate-200 transition-colors">Message</label>
+                        <label className="block mb-2 font-medium text-slate-800 dark:text-slate-200 transition-colors">Message</label>
                         <textarea
                             name="message"
                             placeholder="Tell me about your project..."
                             value={form.message}
                             onChange={handleChange}
                             rows={4}
-                            className="w-full rounded-lg bg-gray-100 dark:bg-slate-800 text-gray-900 dark:text-slate-100 placeholder:text-gray-400 dark:placeholder:text-slate-500 border border-transparent dark:border-slate-700 px-4 py-3
-                                        outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+                            className="w-full rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 border border-transparent dark:border-slate-700 px-4 py-3
+                                        outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
                             required
                         />
                     </div>
@@ -168,10 +168,8 @@ export default function Contact() {
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className={`w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white py-3 rounded-lg font-medium transition-colors ${
-                            isSubmitting
-                                ? "opacity-70 cursor-not-allowed"
-                                : "hover:bg-blue-700"
+                        className={`w-full brand-gradient text-white py-3 rounded-lg font-semibold transition-opacity ${
+                            isSubmitting ? "opacity-70 cursor-not-allowed" : "hover:opacity-90"
                         }`}
                     >
                         {isSubmitting ? "Sending..." : "Send Message"}
