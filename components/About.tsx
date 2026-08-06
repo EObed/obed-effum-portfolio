@@ -1,135 +1,83 @@
 "use client"
 
-import { useEffect, useRef } from "react"
 import { Download } from "lucide-react"
 import { FaCode } from "react-icons/fa6"
+import { useInView } from "@/hooks/useInView"
+
+const stack = ["Next.js", "React", "TypeScript", "Tailwind CSS", "Laravel", "PHP"]
 
 const About = () => {
-    const sectionRef = useRef<HTMLElement>(null)
-    const leftRef = useRef<HTMLDivElement>(null)
-    const rightRef = useRef<HTMLDivElement>(null)
-    const titleRef = useRef<HTMLHeadingElement>(null)
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("in-view")
-                    }
-                })
-            },
-            { threshold: 0.15 }
-        )
-
-        const elements = [titleRef.current, leftRef.current, rightRef.current]
-        elements.forEach((el) => el && observer.observe(el))
-
-        return () => observer.disconnect()
-    }, [])
+    const { ref: titleRef, inView: titleInView } = useInView<HTMLHeadingElement>(0.15)
+    const { ref: leftRef, inView: leftInView } = useInView<HTMLDivElement>(0.15)
+    const { ref: rightRef, inView: rightInView } = useInView<HTMLDivElement>(0.15)
 
     return (
-        <>
-            <style>{`
-                .reveal {
-                    opacity: 0;
-                    transform: scale(0.92) translateY(40px);
-                    filter: blur(6px);
-                    transition: opacity 0.7s ease, transform 0.7s ease, filter 0.7s ease;
-                }
+        <section
+            id="about"
+            className="w-full bg-slate-50 dark:bg-slate-950 px-6 py-20 md:py-28 transition-colors"
+        >
+            <div className="max-w-5xl mx-auto flex flex-col gap-12">
 
-                .reveal.in-view {
-                    opacity: 1;
-                    transform: scale(1) translateY(0);
-                    filter: blur(0px);
-                }
+                <h2
+                    ref={titleRef}
+                    data-reveal
+                    data-inview={titleInView}
+                    className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-slate-100 text-center transition-colors"
+                >
+                    About Me
+                </h2>
 
-                .reveal-left {
-                    opacity: 0;
-                    transform: scale(0.94) translateX(-40px);
-                    filter: blur(4px);
-                    transition: opacity 0.75s ease 0.15s, transform 0.75s ease 0.15s, filter 0.75s ease 0.15s;
-                }
+                <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
 
-                .reveal-left.in-view {
-                    opacity: 1;
-                    transform: scale(1) translateX(0);
-                    filter: blur(0px);
-                }
-
-                .reveal-right {
-                    opacity: 0;
-                    transform: scale(0.94) translateX(40px);
-                    filter: blur(4px);
-                    transition: opacity 0.75s ease 0.3s, transform 0.75s ease 0.3s, filter 0.75s ease 0.3s;
-                }
-
-                .reveal-right.in-view {
-                    opacity: 1;
-                    transform: scale(1) translateX(0);
-                    filter: blur(0px);
-                }
-            `}</style>
-
-            <section
-                ref={sectionRef}
-                id="about"
-                className="w-full bg-white dark:bg-slate-950 px-6 py-20 md:py-28 transition-colors dark:border-y "
-            >
-                <div className="max-w-5xl mx-auto flex flex-col gap-12">
-
-                    <h2
-                        ref={titleRef}
-                        className="reveal text-4xl md:text-5xl font-bold text-gray-900 dark:text-slate-100 text-center transition-colors"
+                    <div
+                        ref={leftRef}
+                        data-reveal="left"
+                        data-inview={leftInView}
+                        className="flex flex-col gap-5 md:w-1/2"
                     >
-                        About Me
-                    </h2>
+                        <p className="text-slate-600 dark:text-slate-400 text-base md:text-lg leading-relaxed transition-colors">
+                            I’m a full-stack developer who enjoys turning complex ideas into fast, reliable, and intuitive digital products.
+                            My work spans both frontend and backend development, allowing me to build complete, end-to-end solutions that don’t just look good but also perform efficiently under the hood.
+                            I build scalable, end-to-end web applications using modern frontend technologies like Next.js, React, TypeScript, and Tailwind CSS, alongside backend tools such as PHP and Laravel.
+                            I focus on creating responsive, accessible interfaces and well-structured APIs, with an emphasis on clean, maintainable code, efficient data handling, and systems that are easy to scale and extend.
+                        </p>
 
-                    <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
-
-                        <div
-                            ref={leftRef}
-                            className="reveal-left flex flex-col gap-5 md:w-1/2"
+                        <a
+                            href="/resume.pdf"
+                            download="Obed_Effum_Resume.pdf"
+                            className="self-start flex items-center gap-2 px-5 py-3 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-800 dark:text-slate-200 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors mt-2"
                         >
-                            <p className="text-gray-600 dark:text-slate-400 text-base md:text-lg leading-relaxed transition-colors">
-                                I’m a full-stack developer who enjoys turning complex ideas into fast, reliable, and intuitive digital products.
-                                My work spans both frontend and backend development, allowing me to build complete, end-to-end solutions that don’t just look good but also perform efficiently under the hood.
-                                I build scalable, end-to-end web applications using modern frontend technologies like Next.js, React, TypeScript, and Tailwind CSS, alongside backend tools such as PHP and Laravel.
-                                I focus on creating responsive, accessible interfaces and well-structured APIs, with an emphasis on clean, maintainable code, efficient data handling, and systems that are easy to scale and extend.
-                            </p>
+                            <Download size={16} strokeWidth={1.8} />
+                            Download Resume
+                        </a>
+                    </div>
 
-                            <a
-                                href="/resume.pdf"
-                                download="Obed_Effum_Resume.pdf"
-                                className="self-start flex items-center gap-2 px-5 py-3 border border-gray-300 dark:border-slate-700 rounded-xl text-gray-800 dark:text-slate-200 font-medium text-sm hover:bg-gray-50 dark:hover:bg-slate-900 transition-colors mt-2"
-                            >
-                                <Download size={16} strokeWidth={1.8} />
-                                Download Resume
-                            </a>
-                        </div>
+                    <div
+                        ref={rightRef}
+                        data-reveal="right"
+                        data-inview={rightInView}
+                        className="relative md:w-1/2 w-full rounded-3xl flex flex-col items-center justify-center gap-8 py-14 md:py-20 px-8 shadow-lg dark:shadow-slate-900/40 overflow-hidden brand-gradient"
+                    >
+                        <div className="absolute inset-0 bg-dot-grid opacity-30 [mask-image:radial-gradient(ellipse_70%_70%_at_50%_50%,#000,transparent)]" />
 
-                        <div
-                            ref={rightRef}
-                            className="reveal-right md:w-1/2 w-full rounded-2xl flex items-center justify-center py-16 md:py-24 shadow-lg dark:shadow-slate-900/40"
-                            style={{
-                                background:
-                                    "linear-gradient(135deg, #5b73f5 0%, #8b5cf6 50%, #a855f7 100%)",
-                            }}
-                        >
-                            <span
-                                className="text-white font-mono font-bold select-none"
-                                style={{
-                                    fontSize: "clamp(3rem, 8vw, 5.5rem)",
-                                    letterSpacing: "-0.02em",
-                                }}
-                            >
-                                <FaCode />
-                            </span>
+                        <span className="relative text-white text-6xl md:text-7xl select-none drop-shadow-sm">
+                            <FaCode />
+                        </span>
+
+                        <div className="relative flex flex-wrap justify-center gap-2 max-w-xs">
+                            {stack.map((tech) => (
+                                <span
+                                    key={tech}
+                                    className="px-3 py-1 rounded-full bg-white/15 backdrop-blur-sm text-white text-xs font-medium border border-white/20"
+                                >
+                                    {tech}
+                                </span>
+                            ))}
                         </div>
                     </div>
                 </div>
-            </section>
-        </>
+            </div>
+        </section>
     )
 }
 

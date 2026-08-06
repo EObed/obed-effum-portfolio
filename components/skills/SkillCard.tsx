@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useRef } from "react";
 import type { LucideIcon } from "lucide-react";
+import { useInView } from "@/hooks/useInView"
 
 interface SkillCardProps {
     icon: LucideIcon
@@ -11,40 +11,27 @@ interface SkillCardProps {
 }
 
 export const SkillCard = ({ icon: Icon, title, skills, delay = 0 }: SkillCardProps) => {
-    const cardRef = useRef<HTMLDivElement>(null)
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("in-view")
-                    }
-                })
-            },
-            { threshold: 0.15 }
-        )
-        if (cardRef.current) observer.observe(cardRef.current)
-        return () => observer.disconnect()
-    }, [])
+    const { ref: cardRef, inView: cardInView } = useInView<HTMLDivElement>(0.15)
 
     return (
         <div
             ref={cardRef}
-            className="skill-card reveal-card group flex flex-col items-center text-center gap-5 p-8 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800
-                        rounded-2xl cursor-default transition-all duration-300 hover:shadow-xl dark:hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] dark:hover:border-blue-500/40
-                        dark:hover:-translate-y-1"
-            style={{ transitionDelay: `${delay}ms` }}
+            data-reveal="scale"
+            data-inview={cardInView}
+            className="group flex flex-col items-center text-center gap-5 p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800
+                        rounded-2xl cursor-default transition-all duration-300 hover:shadow-xl dark:hover:shadow-[0_0_30px_rgba(139,92,246,0.35)] dark:hover:border-indigo-500/40
+                        hover:-translate-y-1"
+            style={{ "--reveal-delay": `${delay}ms` } as React.CSSProperties}
         >
-            <div className="w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-500/10 flex items-center justify-center shrink-0 transition-colors">
+            <div className="w-16 h-16 rounded-full brand-gradient flex items-center justify-center shrink-0">
                 <Icon
                     size={28}
                     strokeWidth={1.6}
-                    className="text-blue-600 dark:text-blue-400"
+                    className="text-white"
                 />
             </div>
 
-            <h3 className="text-lg font-bold text-gray-900 dark:text-slate-100 leading-snug transition-colors">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 leading-snug transition-colors">
                 {title}
             </h3>
 
@@ -52,7 +39,7 @@ export const SkillCard = ({ icon: Icon, title, skills, delay = 0 }: SkillCardPro
                 {skills.map((skill, index) => (
                     <li
                         key={index}
-                        className="text-gray-500 dark:text-slate-400 text-sm md:text-base transition-colors"
+                        className="text-slate-500 dark:text-slate-400 text-sm md:text-base transition-colors"
                     >
                         {skill}
                     </li>
