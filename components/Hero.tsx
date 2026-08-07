@@ -41,7 +41,7 @@ const Hero = () => {
                 <div className="flex flex-wrap justify-center gap-4 mt-2">
                     <a
                         href={"#projects"}
-                        className="px-6 py-3 brand-gradient hover:opacity-90 text-white font-semibold rounded-xl shadow-lg shadow-indigo-500/25 transition-opacity"
+                        className="px-6 py-3 brand-gradient hover:opacity-90 text-white font-semibold rounded-xl  transition-opacity"
                     >
                         View My Work
                     </a>
