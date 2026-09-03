@@ -29,7 +29,8 @@ const NavBar = () => {
         <nav className="sticky top-0 z-50 w-full px-6 md:px-8 py-3.5 bg-slate-50/80 dark:bg-slate-950/75 backdrop-blur-md border-b border-slate-200/70 dark:border-slate-800/70 flex justify-between items-center transition-colors">
             <a href="#" className="flex items-center gap-2.5">
                 <div className="relative w-8 h-8 rounded-full overflow-hidden ring-1 ring-slate-200 dark:ring-slate-700">
-                    <Image src={logo} alt="Logo" fill className="object-contain" sizes="32px" />
+                    {/* Decorative: the adjacent text already names the link */}
+                    <Image src={logo} alt="" fill className="object-contain" sizes="32px" />
                 </div>
                 <span className="text-lg font-bold text-gradient">
                     Obed Effum

@@ -96,13 +96,13 @@ export const ProjectCard = ({ project, delay = 0 }: ProjectCardProps) => {
                                 <>
                                     <button
                                         onClick={prevImage}
-                                        className="absolute left-3 top-1/2 -translate-y-1/2 p-1.5 bg-white/80 rounded-full shadow hover:bg-white transition-colors"
+                                        className="absolute left-3 top-1/2 -translate-y-1/2 p-1.5 bg-white/80 border border-slate-400/70 text-slate-500 rounded-full shadow hover:bg-white transition-colors"
                                     >
                                         <ChevronLeft size={18} />
                                     </button>
                                     <button
                                         onClick={nextImage}
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 bg-white/80 rounded-full shadow hover:bg-white transition-colors"
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 bg-white/80 border border-slate-400/70 text-slate-500 rounded-full shadow hover:bg-white transition-colors"
                                     >
                                         <ChevronRight size={18} />
                                     </button>

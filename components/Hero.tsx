@@ -18,8 +18,9 @@ const Hero = () => {
                     <div className="relative w-full h-full rounded-full overflow-hidden bg-white dark:bg-slate-950">
                         <Image
                             src={logo}
-                            alt="Logo"
+                            alt="Obed Effum"
                             fill
+                            priority
                             className="object-contain rounded-full"
                             sizes="(max-width: 768px) 96px, 112px"
                         />
@@ -31,7 +32,12 @@ const Hero = () => {
                     Full Stack Developer
                 </div>
 
-                <AnimatedHeader />
+                {/* The wordmark is drawn as SVG paths, so the h1 supplies the
+                    real text for crawlers and screen readers. */}
+                <h1 className="w-full flex justify-center">
+                    <span className="sr-only">Obed Effum — Full Stack Developer</span>
+                    <AnimatedHeader />
+                </h1>
 
                 <p className="text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-xl leading-relaxed transition-colors">
                     Building scalable, high-performance web applications with modern frontend and backend technologies.
