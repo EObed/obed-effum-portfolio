@@ -218,3 +218,41 @@ body {
 [data-reveal="scale"][data-inview="true"] {
     transform: scale(1) translateY(0);
 }
+
+/* Entrance reveal for above-the-fold content (404 page) — same look as
+   [data-reveal], but plays on load instead of on scroll. Stagger with --nf-delay. */
+@keyframes nf-rise {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+        filter: blur(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+[data-nf-rise] {
+    opacity: 0;
+    animation: nf-rise 0.7s ease forwards;
+    animation-delay: var(--nf-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-nf-rise] {
+        animation: none;
+        opacity: 1;
+    }
+}
+
+/* Hide scrollbars on horizontal carousels while keeping them scrollable */
+.no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}

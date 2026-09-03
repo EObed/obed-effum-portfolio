@@ -36,6 +36,7 @@ export default function AnimatedHeader() {
         }
     }, []);
 
+    // Decorative wordmark — the enclosing <h1> carries the accessible name.
     return (
         <svg
             ref={svgRef}
@@ -45,8 +46,8 @@ export default function AnimatedHeader() {
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
+            aria-hidden="true"
         >
-            <title>Obed Effum</title>
             {GLYPHS.map((g, i) => (
                 <path key={i} className="line" fill="currentColor" fillOpacity={0} d={g.d} />
             ))}
