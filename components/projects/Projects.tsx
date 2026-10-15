@@ -1,93 +1,109 @@
 "use client"
 
-import { ProjectCard } from "@/components/projects/ProjectCard"
-import IProject from "@/types/IProject";
-import { useInView } from "@/hooks/useInView"
+import { useCallback, useState } from "react"
+import Image from "next/image"
+import { ArrowUpRight, Images } from "lucide-react"
+import Buffer from "@/components/editor/Buffer"
+import Heading from "@/components/editor/Heading"
+import Reveal from "@/components/editor/Reveal"
+import ImageViewer from "@/components/projects/ImageViewer"
+import { sectionFiles } from "@/lib/editor"
+import { projects } from "@/lib/projects"
+import type IProject from "@/types/IProject"
 
-const projectsData: IProject[] = [
-    {
-        title: "TrendiPay API Portal",
-        images: ["/images/projects/portal1.png", "/images/projects/portal2.png", "/images/projects/portal3.png", "/images/projects/portal4.png"],
-        description:
-            "A web app for users of the TrendiPay API to monitor their transactions and receive real-time analytics. The app also allows these users to revoke and regenerate API keys. The app also allows TrendiPay admins to view transactions and analytics on all their users. The app is also able" +
-            " to detect suspected fraudulent transactions and display them to admins in an intuitive way to aid admins to take the necessary actions",
-        techStack: ["Next.js", "Socket.io", "Tailwind", "Tanstack Query"]
-
-    },
-    {
-        title: "Dispursa",
-        images: ["/images/projects/dispursa1.png", "/images/projects/dispursa2.png", "/images/projects/dispursa3.png", "/images/projects/dispursa4.png"],
-        description:
-            "A web app for making bulk disbursements powered by the TrendiPay API. Users can choose to either enter account details of multiple " +
-            "recipients or upload a CSV file containing the account details of the recipients and disburse fund to these recipients. Users can also choose to schedule payments," +
-            "a feature ideal for businesses who would want a simple and seamless solution to handle salary payment to staff among other use cases.",
-        techStack: ["Next.js", "Axios", "Socket.io", "Tailwind", "Zustand"],
-        link: "https://dispursa.com"
-    },
-    {
-        title: "TrendiCheckout",
-        images: ["/images/projects/checkout1.png", "/images/projects/checkout2.png", "/images/projects/checkout3.png", "/images/projects/checkout4.png"],
-        description:
-            "A checkout system for businesses and individuals who want to receive payments via mobile money, bank or cards. Users are given terminals that can be accessed via links or custom QR codes that they can share with customers to facilitate payments." +
-            " Ideal for e-commerce platforms, restaurants, clubs and any other businesses that receive payments",
-        techStack: ["Next.js", "Fetch API", "Socket.io", "Tailwind", "Tanstack Query"],
-        link: "https://checkout.trendipay.com",
-    },
-    {
-        title: "Merchant Profiling System",
-        images: ["/images/projects/mps1.png", "/images/projects/mps2.png", "/images/projects/mps3.png", "/images/projects/mps4.png"],
-        description:
-            "A web app for handling onboarding and KYC processes for individuals and businesses that want to use the TrendiPay API. This app allows various departments of" +
-            " TrendiPay Admins (such as finance, support and legal) to review KYC documentation submitted by partners, configure fees to charge each partner per transaction performed, manage the various payment methods available on the TrendiPay API and other administrative tasks.",
-        techStack: ["Next.js", "Fetch API", "Tanstack Query", "Tailwind"],
-    },
-    {
-        title: "Cardii",
-        images: ["/images/projects/cardii4.png", "/images/projects/cardii1.png", "/images/projects/cardii2.png", "/images/projects/cardii3.png"],
-        description:
-            "A solution for a car rental company to gather information from prospective clients. Users can sign up for various services provided by Cardii such as rentals, defensive driving lessons, etc. There is also an admin portal where admins can log in to view information collected from users, create SMS campaigns, etc,",
-        techStack: ["Next.js", "Fetch API", "Tanstack Query", "Tailwind"],
-        link: "https://www.cardii.net"
-    },
-]
+type ViewerState = { project: IProject; index: number } | null
 
 const Projects = () => {
-    const { ref: titleRef, inView: titleInView } = useInView<HTMLDivElement>(0.1)
+    const { id, name, lang } = sectionFiles.projects
+    const [viewer, setViewer] = useState<ViewerState>(null)
+
+    const close = useCallback(() => setViewer(null), [])
+    const step = useCallback((delta: number) => {
+        setViewer((v) => {
+            if (!v) return v
+            const n = v.project.images.length
+            return { ...v, index: (v.index + delta + n) % n }
+        })
+    }, [])
 
     return (
-        <section
-            id="projects"
-            className="w-full bg-slate-50 dark:bg-slate-950 px-6 py-20 md:py-28 transition-colors"
-        >
-            <div className="max-w-6xl mx-auto flex flex-col gap-12">
+        <Buffer id={id} file={name} lang={lang}>
+            <Reveal>
+                <Heading>projects</Heading>
+                <p className="mt-4 max-w-[68ch] leading-7 text-subtext1">
+                    Recent work — payment platforms, dashboards and the internal tools that keep businesses
+                    running.
+                </p>
+            </Reveal>
 
-                <div
-                    ref={titleRef}
-                    data-reveal
-                    data-inview={titleInView}
-                    className="text-center flex flex-col gap-3"
-                >
-                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-slate-100 transition-colors">
-                        Featured Projects
-                    </h2>
+            <div className="mt-12 grid gap-x-10 gap-y-16 lg:grid-cols-2">
+                {projects.map((project, i) => (
+                    <Reveal key={project.slug} delay={(i % 2) * 100}>
+                        <article id={`project-${project.slug}`} className="flex flex-col">
+                            <p className="text-xs text-overlay2">{`// ${String(i + 1).padStart(2, "0")}`}</p>
+                            <Heading level={3} mark="##" className="mt-1 text-blue">
+                                {project.title}
+                            </Heading>
 
-                    <p className="text-slate-500 dark:text-slate-400 text-base md:text-lg transition-colors">
-                        Here are some of my recent works that showcase my skills and expertise
-                    </p>
-                </div>
+                            <button
+                                type="button"
+                                onClick={() => setViewer({ project, index: 0 })}
+                                aria-label={`View ${project.title} screenshots`}
+                                className="group relative mt-4 aspect-[16/10] w-full overflow-hidden border border-overlay0 bg-surface0 outline-none transition-colors hover:border-green focus-visible:border-green"
+                            >
+                                <Image
+                                    src={project.images[0]}
+                                    alt=""
+                                    fill
+                                    sizes="(max-width: 1024px) 100vw, 40vw"
+                                    className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                                />
+                                <span className="absolute bottom-0 left-0 flex items-center gap-1.5 border-r border-t border-overlay0 bg-base/90 px-2 text-xs leading-6 text-subtext1 transition-colors group-hover:text-green">
+                                    <Images size={12} aria-hidden />
+                                    {project.images.length} screenshots
+                                </span>
+                            </button>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {projectsData.map((project, i) => (
-                        <ProjectCard
-                            key={project.title}
-                            project={project}
-                            delay={i * 90}
-                        />
-                    ))}
-                </div>
+                            <p className="mt-4 text-sm leading-6 text-subtext1">{project.description}</p>
 
+                            <p className="mt-3 text-sm leading-6">
+                                <span className="text-red">const</span>{" "}
+                                <span className="text-fg">stack</span>{" "}
+                                <span className="text-subtext0">= [</span>
+                                {project.techStack.map((tech, t) => (
+                                    <span key={tech}>
+                                        <span className="text-lime">&quot;{tech}&quot;</span>
+                                        {t < project.techStack.length - 1 && <span className="text-subtext0">, </span>}
+                                    </span>
+                                ))}
+                                <span className="text-subtext0">]</span>
+                            </p>
+
+                            <div className="mt-5 flex flex-wrap gap-3">
+                                <button type="button" className="btn" onClick={() => setViewer({ project, index: 0 })}>
+                                    <span aria-hidden="true">▸</span> screenshots
+                                </button>
+                                {project.link && (
+                                    <a
+                                        href={project.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="btn"
+                                        style={{ "--btn": "var(--blue)" } as React.CSSProperties}
+                                    >
+                                        live site <ArrowUpRight size={13} aria-hidden />
+                                    </a>
+                                )}
+                            </div>
+                        </article>
+                    </Reveal>
+                ))}
             </div>
-        </section>
+
+            {viewer && (
+                <ImageViewer project={viewer.project} index={viewer.index} onStep={step} onClose={close} />
+            )}
+        </Buffer>
     )
 }
 

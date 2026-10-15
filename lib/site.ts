@@ -33,6 +33,8 @@ export const siteConfig = {
         "Tailwind CSS",
         "Laravel",
         "PHP",
+        "Node.js",
+        "Express",
         "MySQL",
         "REST API Design",
         "Payment Systems",

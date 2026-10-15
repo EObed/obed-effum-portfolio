@@ -1,4 +1,4 @@
-import NavBar from "@/components/NavBar";
+import EditorShell from "@/components/editor/EditorShell";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Skills from "@/components/skills/Skills";
@@ -31,18 +31,19 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <div>
+    <>
       <StructuredData />
-      <NavBar />
-      <main>
-        <Hero />
-        <About />
-        <Projects />
-        <Skills />
-        <Solutions />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+      <EditorShell>
+        <main id="main">
+          <Hero />
+          <About />
+          <Projects />
+          <Skills />
+          <Solutions />
+          <Contact />
+        </main>
+        <Footer />
+      </EditorShell>
+    </>
   );
 }

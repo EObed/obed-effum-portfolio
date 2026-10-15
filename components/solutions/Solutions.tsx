@@ -1,225 +1,76 @@
-"use client";
+import { AppWindow, CreditCard, FileCheck2, Headset, LayoutDashboard, Workflow, type LucideIcon } from "lucide-react"
+import Buffer from "@/components/editor/Buffer"
+import Heading from "@/components/editor/Heading"
+import Reveal from "@/components/editor/Reveal"
+import { sectionFiles } from "@/lib/editor"
 
-import { useCallback, useEffect, useRef, useState } from "react"
-import { SolutionCard } from "@/components/solutions/SolutionCard";
-import { AppWindow, CreditCard, Workflow, FileCheck2, LayoutDashboard, Headset } from "lucide-react"
-import { useInView } from "@/hooks/useInView"
-
-const solutionsData: {
-    number: string
-    icon: typeof AppWindow
-    title: string
-    description: string
-    image: string
-}[] = [
+const solutionsData: { icon: LucideIcon; color: string; title: string; description: string }[] = [
     {
-        number: "01",
         icon: AppWindow,
+        color: "text-green",
         title: "Business Web Applications",
         description: "Custom apps built around how your team works.",
-        image: "/images/business-app.png",
     },
     {
-        number: "02",
         icon: CreditCard,
+        color: "text-blue",
         title: "Payment Solutions",
         description: "Collect, disburse and track payments in one place.",
-        image: "/images/payment-solutions.png",
     },
     {
-        number: "03",
         icon: Workflow,
+        color: "text-purple",
         title: "Business Process Automation",
         description: "Trade spreadsheets for software that runs itself.",
-        image: "/images/automation.png",
     },
     {
-        number: "04",
         icon: FileCheck2,
+        color: "text-yellow",
         title: "KYC & Document Management",
         description: "Faster onboarding, verification and approvals.",
-        image: "/images/kyc.png",
     },
     {
-        number: "05",
         icon: LayoutDashboard,
+        color: "text-aqua",
         title: "Dashboards & Reporting",
         description: "Real-time visibility into the numbers that matter.",
-        image: "/images/dashboard.png",
     },
     {
-        number: "06",
         icon: Headset,
+        color: "text-pink",
         title: "IT Support & Consultancy",
         description: "Ongoing support and guidance to keep systems running.",
-        image: "/images/it-support.png",
     },
 ]
 
-const AUTOPLAY_MS = 3800
-
 const Solutions = () => {
-    const { ref: titleRef, inView: titleInView } = useInView<HTMLDivElement>(0.2)
-
-    // Desktop: hover to expand a card
-    const [activeIndex, setActiveIndex] = useState(0)
-
-    // Mobile: auto-advancing carousel
-    const [slide, setSlide] = useState(0)
-    const trackRef = useRef<HTMLDivElement>(null)
-    const pausedRef = useRef(false)
-    const { ref: carouselRef, inView: carouselInView } = useInView<HTMLDivElement>(0.2)
-
-    const scrollToIndex = useCallback((index: number) => {
-        const track = trackRef.current
-        if (!track) return
-        const count = solutionsData.length
-        const next = ((index % count) + count) % count
-        const child = track.children[next] as HTMLElement | undefined
-        if (child) {
-            const left = child.offsetLeft - (track.clientWidth - child.clientWidth) / 2
-            track.scrollTo({ left, behavior: "smooth" })
-        }
-        setSlide(next)
-    }, [])
-
-    useEffect(() => {
-        if (!carouselInView) return
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
-
-        const id = window.setInterval(() => {
-            if (pausedRef.current || document.hidden) return
-            setSlide((current) => {
-                const next = (current + 1) % solutionsData.length
-                const track = trackRef.current
-                const child = track?.children[next] as HTMLElement | undefined
-                if (track && child) {
-                    const left = child.offsetLeft - (track.clientWidth - child.clientWidth) / 2
-                    track.scrollTo({ left, behavior: "smooth" })
-                }
-                return next
-            })
-        }, AUTOPLAY_MS)
-
-        return () => window.clearInterval(id)
-    }, [carouselInView])
-
-    const handleScroll = () => {
-        const track = trackRef.current
-        if (!track) return
-        const center = track.scrollLeft + track.clientWidth / 2
-        let closest = 0
-        let min = Infinity
-        Array.from(track.children).forEach((child, i) => {
-            const el = child as HTMLElement
-            const elCenter = el.offsetLeft + el.clientWidth / 2
-            const distance = Math.abs(elCenter - center)
-            if (distance < min) {
-                min = distance
-                closest = i
-            }
-        })
-        setSlide(closest)
-    }
-
-    const pause = () => {
-        pausedRef.current = true
-    }
-    const resume = () => {
-        pausedRef.current = false
-    }
+    const { id, name, lang } = sectionFiles.solutions
 
     return (
-        <section
-            id="solutions"
-            className="w-full bg-slate-50 dark:bg-slate-950 px-6 py-20 md:py-28 transition-colors"
-        >
-            <div className="max-w-6xl mx-auto flex flex-col gap-12">
-                <div
-                    ref={titleRef}
-                    data-reveal
-                    data-inview={titleInView}
-                    className="text-center flex flex-col gap-3"
-                >
-                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-slate-100 transition-colors">
-                        Solutions
-                    </h2>
+        <Buffer id={id} file={name} lang={lang}>
+            <Reveal>
+                <Heading>solutions</Heading>
+                <p className="mt-4 max-w-[68ch] leading-7 text-subtext1">
+                    Ways I can help businesses build and run better software.
+                </p>
+            </Reveal>
 
-                    <p className="text-slate-500 dark:text-slate-400 text-base md:text-lg transition-colors">
-                        Ways I can help businesses build and run better software
-                    </p>
-                </div>
-
-                {/* Desktop: expanding cards */}
-                <div
-                    className="hidden md:flex flex-row gap-4 overflow-x-auto"
-                    onMouseLeave={() => setActiveIndex(0)}
-                >
-                    {solutionsData.map((item, i) => (
-                        <SolutionCard
-                            key={item.title}
-                            number={item.number}
-                            icon={item.icon}
-                            title={item.title}
-                            description={item.description}
-                            image={item.image}
-                            isOpen={activeIndex === i}
-                            onActivate={() => setActiveIndex(i)}
-                            delay={i * 80}
-                        />
-                    ))}
-                </div>
-
-                {/* Mobile: auto-advancing carousel */}
-                <div ref={carouselRef} className="md:hidden flex flex-col gap-5">
-                    <div
-                        ref={trackRef}
-                        onScroll={handleScroll}
-                        onPointerDown={pause}
-                        onPointerUp={resume}
-                        onPointerCancel={resume}
-                        onTouchStart={pause}
-                        onTouchEnd={resume}
-                        className="relative flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-6 px-6"
-                    >
-                        {solutionsData.map((item) => (
-                            <div
-                                key={item.title}
-                                className="snap-center shrink-0 w-[80vw] max-w-[300px]"
-                            >
-                                <SolutionCard
-                                    number={item.number}
-                                    icon={item.icon}
-                                    title={item.title}
-                                    description={item.description}
-                                    image={item.image}
-                                    isOpen
-                                    onActivate={() => {}}
-                                />
+            <Reveal delay={100}>
+                {/* gap-px over a coloured background draws the 1px table rules */}
+                <ol className="mt-10 grid gap-px border border-surface1 bg-surface1 sm:grid-cols-2 2xl:grid-cols-3">
+                    {solutionsData.map(({ icon: Icon, color, title, description }, i) => (
+                        <li key={title} className="group flex flex-col gap-3 bg-base p-5 transition-colors hover:bg-surface0 md:p-6">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs tabular-nums text-overlay2">{String(i + 1).padStart(2, "0")}</span>
+                                <Icon size={18} strokeWidth={1.6} aria-hidden className={`${color} transition-transform group-hover:-translate-y-0.5`} />
                             </div>
-                        ))}
-                    </div>
-
-                    {/* Progress dots */}
-                    <div className="flex justify-center gap-2">
-                        {solutionsData.map((item, i) => (
-                            <button
-                                key={item.title}
-                                type="button"
-                                aria-label={`Show ${item.title}`}
-                                aria-current={slide === i}
-                                onClick={() => scrollToIndex(i)}
-                                className={`h-1.5 rounded-full transition-all duration-300 ${
-                                    slide === i
-                                        ? "w-6 bg-indigo-500 dark:bg-indigo-400"
-                                        : "w-1.5 bg-slate-300 dark:bg-slate-700"
-                                }`}
-                            />
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </section>
+                            <h3 className="font-bold text-fg">{title}</h3>
+                            <p className="text-sm leading-6 text-subtext1">{description}</p>
+                        </li>
+                    ))}
+                </ol>
+            </Reveal>
+        </Buffer>
     )
 }
 
