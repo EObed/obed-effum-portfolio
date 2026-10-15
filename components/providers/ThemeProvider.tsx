@@ -11,8 +11,10 @@ export function ThemeProvider({
     return (
         <NextThemesProvider
             attribute="class"
-            defaultTheme="system"
-            enableSystem
+            defaultTheme="dark"
+            enableSystem={false}
+            // New key so visitors who saved "system" under the old design start on dark
+            storageKey="oe-theme"
         >
             {children}
         </NextThemesProvider>

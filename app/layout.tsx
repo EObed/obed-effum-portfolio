@@ -1,11 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Poppins } from 'next/font/google'
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import {Toaster} from "@/components/ui/sonner";
 import {ThemeProvider} from "@/components/providers/ThemeProvider";
 import { siteConfig } from "@/lib/site";
 
-const poppins = Poppins({ subsets: ["latin"], weight: ['400', '500', '600', '700', '800', '900'] });
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-jetbrains",
+});
 
 
 export const metadata: Metadata = {
@@ -52,11 +56,9 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
-    { media: "(prefers-color-scheme: dark)", color: "#020617" },
-  ],
-  colorScheme: "light dark",
+  // Dark is the default theme regardless of OS preference; light is opt-in.
+  themeColor: "#1c2225",
+  colorScheme: "dark light",
 };
 
 export default function RootLayout({
@@ -67,13 +69,13 @@ export default function RootLayout({
   return (
       <html
           lang="en"
-          className={`${poppins.className} h-full antialiased`}
+          className={`${mono.variable} antialiased`}
           suppressHydrationWarning
       >
-      <body className="min-h-full flex flex-col">
+      <body>
         <ThemeProvider>
           {children}
-          <Toaster position="top-center" duration={5000} richColors theme="system" />
+          <Toaster position="top-right" duration={5000} />
         </ThemeProvider>
       </body>
       </html>

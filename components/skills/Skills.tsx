@@ -1,65 +1,49 @@
-"use client";
-
-import { SkillCard } from "@/components/skills/SkillCard";
-import { Code2, Server, Wrench } from "lucide-react"
-import { useInView } from "@/hooks/useInView"
+import Buffer from "@/components/editor/Buffer"
+import Heading from "@/components/editor/Heading"
+import Reveal from "@/components/editor/Reveal"
+import { sectionFiles } from "@/lib/editor"
 
 const skillsData = [
-    {
-        icon: Code2,
-        title: "Frontend Development",
-        skills: ["React", "TypeScript", "Tailwind CSS", "Next.js"],
-    },
-    {
-        icon: Server,
-        title: "Backend Development",
-        skills: ["PhP", "Laravel", "MySQL"],
-    },
-    {
-        icon: Wrench,
-        title: "Tools & Workflow",
-        skills: ["Git & GitHub", "AI-Assisted Development", "Postman"],
-    },
+    { key: "frontend", title: "Frontend Development", skills: ["React", "TypeScript", "Tailwind CSS", "Next.js"] },
+    { key: "backend", title: "Backend Development", skills: ["PHP", "Laravel", "Node.js", "Express", "MySQL"] },
+    { key: "tooling", title: "Tools & Workflow", skills: ["Git & GitHub", "Artificial Intelligence", "Postman", "Figma", "Adobe XD"] },
 ]
 
+const p = (s: string) => <span className="text-subtext0">{s}</span>
+
+/** Rendered as a syntax-highlighted TypeScript module. */
 const Skills = () => {
-    const { ref: titleRef, inView: titleInView } = useInView<HTMLDivElement>(0.2)
+    const { id, name, lang } = sectionFiles.skills
 
     return (
-        <section
-            id="skills"
-            className="w-full bg-slate-50 dark:bg-slate-950 px-6 py-20 md:py-28 transition-colors"
-        >
-            <div className="max-w-6xl mx-auto flex flex-col gap-12">
-                <div
-                    ref={titleRef}
-                    data-reveal
-                    data-inview={titleInView}
-                    className="text-center flex flex-col gap-3"
-                >
-                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-slate-100 transition-colors">
-                        Skills & Expertise
-                    </h2>
+        <Buffer id={id} file={name} lang={lang}>
+            <Reveal>
+                <Heading mark="//">skills &amp; expertise</Heading>
+                <p className="mt-4 max-w-[68ch] leading-7 text-subtext1">Technologies and tools I reach for.</p>
+            </Reveal>
 
-                    <p className="text-slate-500 dark:text-slate-400 text-base md:text-lg transition-colors">
-                        Technologies and tools I utilize
-                    </p>
-                </div>
-
-                <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
-                    {skillsData.map((item, i) => (
-                        <SkillCard
-                            key={item.title}
-                            icon={item.icon}
-                            title={item.title}
-                            skills={item.skills}
-                            delay={i * 100}
-                        />
-                    ))}
-                </div>
-
-            </div>
-        </section>
+            <Reveal delay={100}>
+                <pre className="mt-10 overflow-x-auto text-sm leading-6">
+                    <code>
+                        <span className="text-red">export const</span> <span className="text-fg">skills</span> {p("= {")}
+                        {"\n"}
+                        {skillsData.map((group) => (
+                            <span key={group.key}>
+                                {"  "}<span className="italic text-overlay2">{`// ${group.title}`}</span>{"\n"}
+                                {"  "}<span className="text-green">{group.key}</span>{p(": [")}{"\n"}
+                                {group.skills.map((skill) => (
+                                    <span key={skill}>
+                                        {"    "}<span className="text-lime">&quot;{skill}&quot;</span>{p(",")}{"\n"}
+                                    </span>
+                                ))}
+                                {"  "}{p("],")}{"\n"}
+                            </span>
+                        ))}
+                        {p("}")} <span className="text-red">as const</span>
+                    </code>
+                </pre>
+            </Reveal>
+        </Buffer>
     )
 }
 

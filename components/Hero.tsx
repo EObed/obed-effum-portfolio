@@ -1,95 +1,99 @@
-import logo from "@/public/images/logo.png";
-import Image from "next/image";
-import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
-import AnimatedHeader from "@/components/AnimatedHeader";
+import Link from "next/link"
+import { ArrowUpRight, Download } from "lucide-react"
+import AsciiMeadow from "@/components/AsciiMeadow"
+import { BufferTab } from "@/components/editor/Buffer"
+import LineGutter from "@/components/editor/LineGutter"
+import { sectionFiles } from "@/lib/editor"
+import { siteConfig } from "@/lib/site"
+
+const links = [
+    { label: "github", href: siteConfig.social.github },
+    { label: "linkedin", href: siteConfig.social.linkedin },
+]
 
 const Hero = () => {
     return (
-        <section className="relative min-h-screen overflow-hidden bg-slate-50 dark:bg-slate-950 flex items-center justify-center px-6 py-24 transition-colors">
-            <div className="absolute inset-0 bg-dot-grid [mask-image:radial-gradient(ellipse_60%_60%_at_50%_35%,#000_10%,transparent_75%)]" />
-            <div
-                className="absolute top-[-10rem] left-1/2 -translate-x-1/2 w-[36rem] h-[36rem] rounded-full opacity-20 dark:opacity-25 blur-3xl"
-                style={{ background: "var(--accent-gradient)" }}
-            />
+        <section
+            id={sectionFiles.readme.id}
+            className="flex min-h-[calc(100svh-4.25rem)] flex-col border-b border-surface1 lg:min-h-[calc(100svh-1.75rem)]"
+        >
+            <BufferTab file={sectionFiles.readme.name} lang={sectionFiles.readme.lang} />
 
-            <div className="relative flex flex-col items-center text-center max-w-3xl mx-auto gap-6">
+            <div className="relative flex flex-1 flex-col overflow-hidden">
+                <AsciiMeadow className="absolute inset-0" />
+                <LineGutter />
 
-                <div className="relative w-24 h-24 md:w-28 md:h-28 rounded-full p-1 brand-gradient shadow-lg shadow-indigo-500/20">
-                    <div className="relative w-full h-full rounded-full overflow-hidden bg-white dark:bg-slate-950">
-                        <Image
-                            src={logo}
-                            alt="Obed Effum"
-                            fill
-                            priority
-                            className="object-contain rounded-full"
-                            sizes="(max-width: 768px) 96px, 112px"
-                        />
+                <div className="relative px-4 pb-[min(45svh,24rem)] pt-12 sm:pl-16 sm:pr-8 md:pt-20 lg:pl-20">
+                    <p className="text-sm text-subtext0">
+                        <span className="text-green">❯</span> whoami
+                    </p>
+
+                    <h1 className="mt-4">
+                        <span className="block text-5xl font-bold leading-none tracking-tight text-fg sm:text-6xl md:text-7xl">
+                            Obed Effum
+                        </span>
+                        <span className="mt-4 block text-lg text-green md:text-xl">
+                            full stack developer<span className="caret" aria-hidden="true" />
+                        </span>
+                    </h1>
+
+                    <p className="mt-6 max-w-xl leading-7 text-subtext1">
+                        Building scalable, high-performance web applications with modern frontend and
+                        backend technologies — clean architecture, maintainable code, and seamless
+                        experiences from interface to API.
+                    </p>
+
+                    <div className="mt-8 flex flex-wrap gap-3">
+                        <Link href="/#projects" className="btn">
+                            <span aria-hidden="true">▸</span> view projects
+                        </Link>
+                        <a
+                            href="/resume.pdf"
+                            download="Obed_Effum_Resume.pdf"
+                            className="btn"
+                            style={{ "--btn": "var(--blue)" } as React.CSSProperties}
+                        >
+                            <Download size={13} aria-hidden /> resume.pdf
+                        </a>
+                        <Link href="/#contact" className="btn" style={{ "--btn": "var(--purple)" } as React.CSSProperties}>
+                            <span aria-hidden="true">✉</span> get in touch
+                        </Link>
                     </div>
+
+                    <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-1 text-sm text-subtext0">
+                        {links.map((link) => (
+                            <li key={link.label}>
+                                <a
+                                    href={link.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-1 underline decoration-surface2 underline-offset-4 transition-colors hover:text-fg hover:decoration-green"
+                                >
+                                    {link.label}
+                                    <ArrowUpRight size={12} aria-hidden />
+                                </a>
+                            </li>
+                        ))}
+                        <li>
+                            <a
+                                href={`mailto:${siteConfig.email}`}
+                                className="underline decoration-surface2 underline-offset-4 transition-colors hover:text-fg hover:decoration-green"
+                            >
+                                {siteConfig.email}
+                            </a>
+                        </li>
+                    </ul>
                 </div>
 
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-sm font-medium text-slate-600 dark:text-slate-300">
-                    <span className="w-2 h-2 rounded-full brand-gradient" />
-                    Full Stack Developer
-                </div>
-
-                {/* The wordmark is drawn as SVG paths, so the h1 supplies the
-                    real text for crawlers and screen readers. */}
-                <h1 className="w-full flex justify-center">
-                    <span className="sr-only">Obed Effum — Full Stack Developer</span>
-                    <AnimatedHeader />
-                </h1>
-
-                <p className="text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-xl leading-relaxed transition-colors">
-                    Building scalable, high-performance web applications with modern frontend and backend technologies.
-                    Focused on clean architecture, maintainable code, and seamless user experiences from interface to API.
+                <p
+                    aria-hidden="true"
+                    className="pointer-events-none absolute right-4 top-4 hidden text-xs text-overlay2 [@media(hover:hover)]:block sm:right-8"
+                >
+                    ~ wander through the meadow ~
                 </p>
-
-                <div className="flex flex-wrap justify-center gap-4 mt-2">
-                    <a
-                        href={"#projects"}
-                        className="px-6 py-3 brand-gradient hover:opacity-90 text-white font-semibold rounded-xl  transition-opacity"
-                    >
-                        View My Work
-                    </a>
-
-                    <a
-                        href={"#contact"}
-                        className="px-6 py-3 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-900 dark:text-slate-100 font-semibold rounded-xl border border-slate-200 dark:border-slate-700 transition-colors"
-                    >
-                        Get In Touch
-                    </a>
-                </div>
-
-                <div className="flex gap-6 mt-2 text-slate-500 dark:text-slate-400 transition-colors">
-                    <a
-                        href="https://github.com/EObed"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-slate-900 dark:hover:text-white transition-colors"
-                    >
-                        <FaGithub size={26} />
-                    </a>
-
-                    <a
-                        href="https://www.linkedin.com/in/obed-effum-b74244194"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-slate-900 dark:hover:text-white transition-colors"
-                    >
-                        <FaLinkedin size={26} />
-                    </a>
-
-                    <a
-                        href="mailto:obedeffum10@gmail.com"
-                        className="hover:text-slate-900 dark:hover:text-white transition-colors"
-                    >
-                        <FaEnvelope size={26} />
-                    </a>
-                </div>
-
             </div>
         </section>
-    );
-};
+    )
+}
 
-export default Hero;
+export default Hero

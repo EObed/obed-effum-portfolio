@@ -2,8 +2,14 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
+import Buffer from "@/components/editor/Buffer";
+import Heading from "@/components/editor/Heading";
+import Reveal from "@/components/editor/Reveal";
+import { sectionFiles } from "@/lib/editor";
+import { siteConfig } from "@/lib/site";
 
 export default function Contact() {
+    const { id, name, lang } = sectionFiles.contact;
     const [form, setForm] = useState({
         name: "",
         email: "",
@@ -17,27 +23,11 @@ export default function Contact() {
     };
 
     const showSuccess = (message: string) => {
-        toast("Message sent 🎉", {
-            description: <span style={{ color: "#067C3C" }}>{message}</span>,
-            style: {
-                borderColor: "#067C3C1A",
-                color: "#067C3C",
-            },
-            duration: 5000,
-            closeButton: true
-        });
+        toast.success("Message sent", { description: message, closeButton: true });
     };
 
     const showError = (message: string) => {
-        toast("Error 🙁", {
-            description: <span style={{ color: "#e53e3e" }}>{message}</span>,
-            style: {
-                borderColor: "#FF3B301A",
-                color: "#FF3B30",
-            },
-            duration: 5000,
-            closeButton: true
-        });
+        toast.error("Couldn’t send that", { description: message, closeButton: true });
     };
 
     const handleChange = (
@@ -91,91 +81,82 @@ export default function Contact() {
     };
 
     return (
-        <section
-            id="contact"
-            className="py-20 md:py-28 px-6 bg-slate-50 dark:bg-slate-950 transition-colors"
-        >
-            <div className="max-w-3xl mx-auto text-center mb-10">
-                <h2 className="text-4xl md:text-5xl font-black mb-4 text-slate-900 dark:text-slate-100 transition-colors">
-                    Get In Touch
-                </h2>
-
-                <p className="text-slate-500 dark:text-slate-400 text-lg transition-colors">
-                    Have a project in mind? Let&apos;s work together to bring your ideas to life
+        <Buffer id={id} file={name} lang={lang}>
+            <Reveal>
+                <Heading>contact</Heading>
+                <p className="mt-4 max-w-[68ch] leading-7 text-subtext1">
+                    Have a project in mind? Let&apos;s work together to bring your ideas to life.
                 </p>
-            </div>
-
-            <div
-                className="max-w-3xl mx-auto bg-white dark:bg-slate-900 rounded-2xl shadow-sm p-6 sm:p-8 border border-slate-200 dark:border-slate-800 transition-colors"
-            >
-                <h3 className="text-xl font-semibold mb-2 text-slate-900 dark:text-slate-100 transition-colors">
-                    Send Me a Message
-                </h3>
-
-                <p className="text-slate-500 dark:text-slate-400 mb-6 transition-colors">
-                    Fill out the form below and I&apos;ll get back to you as soon as possible
+                <p className="mt-2 text-sm text-subtext0">
+                    <span className="text-green">$</span> or email me directly at{" "}
+                    <a
+                        href={`mailto:${siteConfig.email}`}
+                        className="text-blue underline decoration-surface2 underline-offset-4 hover:decoration-blue"
+                    >
+                        {siteConfig.email}
+                    </a>
                 </p>
+            </Reveal>
 
-                <form onSubmit={handleSubmit} className="space-y-5">
-                    <div>
-                        <label className="block mb-2 font-medium text-slate-800 dark:text-slate-200 transition-colors">Name</label>
+            <Reveal delay={100}>
+                <form onSubmit={handleSubmit} className="mt-10 flex max-w-2xl flex-col gap-6">
+                    <label className="block">
+                        <span className="mb-2 flex items-center gap-2 text-sm text-subtext0">
+                            <span aria-hidden="true" className="text-green">❯</span> name
+                        </span>
                         <input
                             type="text"
                             name="name"
+                            autoComplete="name"
                             placeholder="Your name"
                             value={form.name}
                             onChange={handleChange}
-                            className="w-full rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 border border-transparent dark:border-slate-700 px-4 py-3
-                                        outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
+                            className="field"
                             required
                         />
-                    </div>
+                    </label>
 
-                    <div>
-                        <label className="block mb-2 font-medium text-slate-800 dark:text-slate-200 transition-colors">Email</label>
+                    <label className="block">
+                        <span className="mb-2 flex items-center gap-2 text-sm text-subtext0">
+                            <span aria-hidden="true" className="text-green">❯</span> email
+                        </span>
                         <input
                             type="email"
                             name="email"
+                            autoComplete="email"
                             placeholder="your.email@example.com"
                             value={form.email}
                             onChange={handleChange}
-                            className="w-full rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 border border-transparent dark:border-slate-700 px-4 py-3
-                                        outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
+                            className="field"
                             required
                         />
-
                         {form.email.length >= 2 && !isValidEmail(form.email) && (
-                            <p className="text-sm text-red-500 dark:text-red-400 mt-1 transition-colors">
-                                Please enter a valid email — I’ll contact you via this email
-                            </p>
+                            <span className="mt-1.5 block text-xs text-red">
+                                <span aria-hidden="true">E: </span>Please enter a valid email — I’ll contact you via this email
+                            </span>
                         )}
-                    </div>
+                    </label>
 
-                    <div>
-                        <label className="block mb-2 font-medium text-slate-800 dark:text-slate-200 transition-colors">Message</label>
+                    <label className="block">
+                        <span className="mb-2 flex items-center gap-2 text-sm text-subtext0">
+                            <span aria-hidden="true" className="text-green">❯</span> message
+                        </span>
                         <textarea
                             name="message"
                             placeholder="Tell me about your project..."
                             value={form.message}
                             onChange={handleChange}
-                            rows={4}
-                            className="w-full rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 border border-transparent dark:border-slate-700 px-4 py-3
-                                        outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
+                            rows={5}
+                            className="field resize-y"
                             required
                         />
-                    </div>
+                    </label>
 
-                    <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className={`w-full brand-gradient text-white py-3 rounded-lg font-semibold transition-opacity ${
-                            isSubmitting ? "opacity-70 cursor-not-allowed" : "hover:opacity-90"
-                        }`}
-                    >
-                        {isSubmitting ? "Sending..." : "Send Message"}
+                    <button type="submit" disabled={isSubmitting} className="btn self-start">
+                        {isSubmitting ? "sending…" : <><span aria-hidden="true">⏎</span> send message</>}
                     </button>
                 </form>
-            </div>
-        </section>
+            </Reveal>
+        </Buffer>
     );
 }
