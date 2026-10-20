@@ -42,7 +42,7 @@ const About = () => {
                         ))}
                     </ul>
 
-                    <a href="/resume.pdf" download="Obed_Effum_Resume.pdf" className="btn mt-2 self-start">
+                    <a href="/Obed%20Effum-Resume.pdf" download="Obed_Effum_Resume.pdf" className="btn mt-2 self-start">
                         <Download size={13} aria-hidden /> download resume.pdf
                     </a>
                 </Reveal>

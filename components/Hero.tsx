@@ -48,7 +48,7 @@ const Hero = () => {
                             <span aria-hidden="true">▸</span> view projects
                         </Link>
                         <a
-                            href="/resume.pdf"
+                            href="/Obed%20Effum-Resume.pdf"
                             download="Obed_Effum_Resume.pdf"
                             className="btn"
                             style={{ "--btn": "var(--blue)" } as React.CSSProperties}

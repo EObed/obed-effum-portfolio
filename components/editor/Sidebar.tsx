@@ -130,7 +130,7 @@ const Sidebar = ({ activeId, open, onClose }: SidebarProps) => {
 
                     <ul className="text-subtext1">
                         <li>
-                            <a href="/resume.pdf" download="Obed_Effum_Resume.pdf" className={cn(rowClass, "pl-3")}>
+                            <a href="/Obed%20Effum-Resume.pdf" download="Obed_Effum_Resume.pdf" className={cn(rowClass, "pl-3")}>
                                 <FileIcon name="resume.pdf" />
                                 resume.pdf
                             </a>
